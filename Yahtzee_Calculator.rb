@@ -1,10 +1,10 @@
 =begin
 Yahtzee Calculator
 
-Program by Dylan, June & July 2018
+Program by Dylan McClain, June & July 2018
 Current version August 2018
 
-Next Revisions:
+Upcoming Revisions:
 * Use dataset from method parse_dice_and_check to print dice numbers
     when providing calculations to user (e.g. Your chance of rolling 
     a straight is x IF YOU KEEP YOUR 2,3,4, and 5)
@@ -19,7 +19,7 @@ Next Revisions:
 *Happy Rolling
 =end
 
-require_relative 'YahtzeeCalculations'
+require_relative 'Yahtzee_Probability_Calculations'
 
 puts %q{Welcome to Yahtzee Calculator v. 2.1
         Enter your roll by just listing the numbers on the dice.
