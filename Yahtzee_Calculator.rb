@@ -1,27 +1,17 @@
 =begin
 Yahtzee Calculator
+Program by Dylan McClain, June 2018
+Current version September 2018
 
-Program by Dylan McClain, June & July 2018
-Current version August 2018
+Please see ReadMe for an explanation of the calculator and
+notes on future revisions.
 
-Upcoming Revisions:
-* Use dataset from method parse_dice_and_check to print dice numbers
-    when providing calculations to user (e.g. Your chance of rolling 
-    a straight is x IF YOU KEEP YOUR 2,3,4, and 5)
-* Create a consistent order of outputs that states what you have first,
-    then what your chances of various outcomes are, not intermixed
-* Eliminate the scenario variable and the printing of "scenario we
-    investigated was"
-*Round to nearest whole or half percent
-* Check calculations against another person's yahtzee calcuator
-*BONUS use the point values of outcomes like full house and large straight to
-    make a strategic recommendation to the user.
-*Happy Rolling
+Happy Rolling!
 =end
 
 require_relative 'Yahtzee_Probability_Calculations'
 
-puts %q{Welcome to Yahtzee Calculator v. 2.1
+puts %q{Welcome to Yahtzee Calculator
         Enter your roll by just listing the numbers on the dice.
         Type 'exit' to exit.
         Happy rolling!}
@@ -55,6 +45,7 @@ class Game
 
         @dice = input.to_i.digits.sort
 
+        # Loop to check for valid inputs
         until @dice.length == 5 && @dice.all? {|x| x.between?(1,6)}
             puts "Hmmm...that can't be right"
             puts "What did you really roll?"
@@ -71,26 +62,25 @@ class Game
 
         @roll_count = input.to_i
 
+        # Loop to check for valid inputs
         until @roll_count.between?(1,2)
             puts "Well, that's not right.\nIt's either 1 or 2. Which is it?"
             @roll_count = gets.to_i
         end
     end
     
-    #creates two arrays, one for the numbers you rolled
-    #and one for the amount of times you rolled each number
-    #and then maps those arrays into a hash
-    #then (optional) iterates through the hash to tell player about @multiples
+    # Method to create two arrays, one for the numbers the user rolled
+    # and one for the amount of times user rolled each number
+    # then map these arrays into the hash @multiples.
     def organize_dice
         unique_numbers = @dice.uniq.each
         occurrences = []
         @dice.uniq.each { |n| occurrences << @dice.count(n)}
         @multiples = unique_numbers.zip(occurrences).to_h
-        #@multiples.each { |k,v| puts "You have #{v} of a kind with #{k}s" }
     end
 
-    #parses the hash @multiples and then calls the methods that check for
-    #all the possible scenarios
+    #   Method to parse the hash @multiples and then call the methods that check for
+    #   all the possible scenarios.
     def parse_dice_and_check
         singletons = @multiples.map { |k,v| v==1 ? k : nil }.compact
         pairs = @multiples.map { |k,v| v==2 ? k : nil }.compact
@@ -102,8 +92,8 @@ class Game
         check_straight
     end
     
-    #calculates full house probability within the method
-    #scenarios are: three of a kind or two pair
+    # Method to calculate probability of full house
+    # SCENARIOS ARE: three of a kind or two pair
     def check_full_house(singletons, pairs, triples)
         if triples.any? && pairs.empty?
             scenario = 'full house'
@@ -118,6 +108,7 @@ class Game
         end
     end
 
+    # Method to calculate probability of yahtzee
     def check_yahtzee(singletons, pairs, triples, quadruples, yahtzees)
         if pairs.any?
             pairs.each { |pair| puts "You have a pair of " + pair.to_s + "s" }
@@ -146,10 +137,11 @@ class Game
         end
     end
 
-    #check for straight draws, call methods from YahtzeeCalculations.rb
+    # Method to identify straight draws and call appropriate methods
+    # from Yahtzee_Probability_Caulculations.rb
     def check_straight
         if five_in_a_row?
-            puts "You have a large straight!"
+            puts "You already have a large straight!"
         elsif four_in_a_row?
             puts "You already have a small straight!"
             if (@multiples.keys & [1,6]).any?
@@ -188,7 +180,7 @@ class Game
         puts "The program determined we should investigate #{scenario}"
     end
 
-    #methods used in check_straight
+    # Methods called by check_straight method
     def three_in_a_row?
         @multiples.keys.each_cons(3).any? { |a| a[2] - a[0] == 2 }
     end
