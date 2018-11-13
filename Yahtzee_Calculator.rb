@@ -96,11 +96,9 @@ class Game
     # SCENARIOS ARE: three of a kind or two pair
     def check_full_house(singletons, pairs, triples)
         if triples.any? && pairs.empty?
-            scenario = 'full house'
             chance = (((1.0/6.0) + (5.0/36.0)*(@roll_count-1))*100).truncate(2)
             puts "If you save your #{singletons.join(' or your ')} your chance of rolling a full house is #{chance}%"
         elsif pairs.length == 2
-            scenario = 'full house'
             chance = (((1.0/3.0) + (10.0/36.0)*(@roll_count-1))*100).truncate(2)
             puts "If you save your two pairs your chance of rolling a full house is #{chance}%"
         elsif pairs.any? && triples.any?
@@ -144,40 +142,28 @@ class Game
             puts "You already have a large straight!"
         elsif four_in_a_row?
             puts "You already have a small straight!"
-            if (@multiples.keys & [1,6]).any?
-                scenario = 'four keepers, one edge'
+            if (@multiples.keys & [1,6]).any?=
                 straight_E(@roll_count)
             else
-                scenario = 'four keepers, two edges'
                 straight_F(@roll_count)
             end
         elsif three_in_a_row?
             if four_keepers_one_gap?
-                scenario = 'four keepers, one gap'
                 straight_E(@roll_count)
             elsif (@multiples.keys & [1,6]).any?
-                scenario = 'three keepers, one edge'
                 straight_A(@roll_count)
             else
-                scenario = 'three keepers, two edges'
                 straight_D(@roll_count)
             end
         elsif three_keepers_one_gap?
             if (@multiples.keys & [1,6]).any?
-                scenario = 'three keepers, one gap, one edge'
                 straight_A(@roll_count)
             else
-                scenario = 'three keepers, one gap, two edges'
                 straight_B(@roll_count)
             end
         elsif three_keepers_two_gaps?
-            scenario = 'three keepers, two gaps'
             straight_C(@roll_count)
-        else
-            scenario = 'no straight draw'
         end
-
-        puts "The program determined we should investigate #{scenario}"
     end
 
     # Methods called by check_straight method

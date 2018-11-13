@@ -16,15 +16,3 @@ acheiving Yahtzee after three rolls is roughly 3.4%)
 The program consists of two files: Yahtzee_Calculator.rb (which contains
 the structure of the program), and Yahtzee_Probability_Calculations.rb
 (which contains a majority of the mathematical calculations).
-
-The following is a list of planned extensions and revisions to the program:
-* Make output more user-friendly by printing instructions along with each
-    caulculation (e.g. "your probability of rolling a large straight 
-    is xyz% IF YOU KEEP YOUR 1, 2, AND 4")
-* Output currently lists elements without an intentional order.  Make output
-    more user-friendly by stating what the user already has first, and then 
-    what the probabilities of various outcomes are.
-* Eliminate the scenario variable and the printing of "scenario we
-    investigated was."
-* Make output more user friendly by rounding all probabilities to nearest 
-    whole or half percent.
