@@ -144,7 +144,8 @@ class Game
         elsif four_in_a_row?
             puts "You already have a small straight!"
             if (@multiples.keys & [1,6]).any?
-                puts "If you save (#{@multiples.keys.join(',')}) your chance of rolling a large straight is #{straight_E(@roll_count)}%"
+                puts "If you save (#{@multiples.keys.join(',')}) "\
+                      "your chance of rolling a large straight is #{straight_E(@roll_count)}%"
             else
                 straight_F(@roll_count)
             end

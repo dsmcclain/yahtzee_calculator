@@ -156,7 +156,6 @@ def straight_E(roll_count)
     elsif
         roll_count == 2
         lg_straight = ((((5.0/6.0)*(1.0/6.0)) + (1.0/6.0))*100).truncate(2)
-        puts "Your chance of rolling a large straight is #{lg_straight}%"
     end
 end
 
