@@ -4,8 +4,7 @@ def triples_check(roll_count)
     if roll_count == 1
         quads_chance = (transitional_arr[1]*100).truncate(2)
         yahtz_chance = (transitional_arr[2]*100).truncate(2)
-        puts "Your chance of rolling four of a kind is #{quads_chance}%"
-        puts "Your chance of rolling YAHTZEE is #{yahtz_chance}%"
+        chances = [quads_chance, yahtz_chance]
     elsif roll_count == 2
         #calculate chance of getting quadruples on 2nd roll
         prob_a = transitional_arr[0]*transitional_arr[1]
@@ -17,8 +16,7 @@ def triples_check(roll_count)
         prob_two = transitional_arr[1]*(6.0/36.0)
         #add these to chance of getting both dice first roll
         yahtz_chance = ((prob_one + prob_two + transitional_arr[2])*100).truncate(2)
-        puts "Your chance of rolling four of a kind is #{quads_chance}%"
-        puts "Your chance of rolling YAHTZEE is #{yahtz_chance}%"
+        chances = [quads_chance, yahtz_chance]
     end
 end
 
@@ -28,9 +26,7 @@ def pairs_check(roll_count)
         trips_chance = (transitional_arr[1]*100).truncate(2)
         quads_chance = (transitional_arr[2]*100).truncate(2)
         yahtz_chance = (transitional_arr[3]*100).truncate(2)
-        puts "Your chance of rolling three of a kind is #{trips_chance}%"
-        puts "Your chance of rolling four of a kind is #{quads_chance}%"
-        puts "Your chance of rolling YAHTZEE is #{yahtz_chance}%"
+        chances = [trips_chance, quads_chance, yahtz_chance]
     elsif roll_count == 2
         #add chance of triples on first roll to chance of nothing on first roll and triples on second roll
         trips_chance = ((transitional_arr[1] + (transitional_arr[0]*transitional_arr[1]))*100).truncate(2)
@@ -48,9 +44,7 @@ def pairs_check(roll_count)
         prob_three = transitional_arr[2]*(1.0/6.0)
         #add these to chance of getting yahtzee on first roll
         yahtz_chance = ((transitional_arr[3] + prob_one + prob_two + prob_three)*100).truncate(2)
-        puts "Your chance of rolling three of a kind is #{trips_chance}%"
-        puts "Your chance of rolling four of a kind is #{quads_chance}%"
-        puts "Your chance of rolling YAHTZEE is #{yahtz_chance}%"
+        chances = [trips_chance, quads_chance, yahtz_chance]
     end
 end
 
