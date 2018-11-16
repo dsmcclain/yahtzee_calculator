@@ -98,8 +98,8 @@ class Game
     def check_full_house(singletons, pairs, triples)
         if triples.any? && pairs.empty?
             chance = (((1.0/6.0) + (5.0/36.0)*(@roll_count-1))*100).truncate(2)
-            puts "If you save your #{triples[0]}s along with your #{singletons.join(' or your ')},"\
-                 " your chance of rolling a full house is #{chance}%"
+            puts "If you save your #{triples[0]}s along with your #{singletons.join(' or your ')}, "\
+                 "your chance of rolling a full house is #{chance}%"
         elsif pairs.length == 2
             chance = (((1.0/3.0) + (10.0/36.0)*(@roll_count-1))*100).truncate(2)
             puts "If you save your two pairs your chance of rolling a full house is #{chance}%"
@@ -110,14 +110,17 @@ class Game
 
     # Method to calculate probability of yahtzee
     def check_yahtzee(singletons, pairs, triples, quadruples, yahtzees)
-        if pairs.any?
+        if pairs.any? && !triples.any?
             pairs.each { |pair| puts "You have a pair of " + pair.to_s + "s" }
-            pairs_check(@roll_count)
+            puts "Your chance of rolling three of a kind is #{pairs_check(@roll_count)[0]}%" 
+            puts "Your chance of rolling four of a kind is #{pairs_check(@roll_count)[1]}%" 
+            puts "Your chance of rolling YAHTZEE is #{pairs_check(@roll_count)[2]}%"
         end
 
         if triples.any?
             puts "You already have three of a kind!"
-            triples_check(@roll_count)
+            puts "Your chance of rolling four of a kind with #{triples[0]}s is #{triples_check(@roll_count)[0]}% "\
+                 "and your chance of rolling YAHTZEE is #{triples_check(@roll_count)[1]}"
         end
 
         if quadruples.any?
