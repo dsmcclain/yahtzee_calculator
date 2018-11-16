@@ -67,8 +67,7 @@ def straight_A(roll_count)
         #small straight uses separate array because only the gap dice qualifies, not the edge
         sm_straight = ((transitional_arr_gap_dice[1])*100).truncate(2)
         lg_straight = ((transitional_arr[2])*100).truncate(2)
-        puts "Your chance of rolling a small straight is #{sm_straight}%"
-        puts "Your chance of rolling a large straight is #{lg_straight}%"
+        straights = [sm_straight, lg_straight]
     elsif roll_count == 2
         #calculate chance of small straight by adding prob of 
         #getting it on the second roll to prob of getting it on first roll
@@ -82,8 +81,7 @@ def straight_A(roll_count)
         prob_three = transitional_arr_gap_dice[1]*(2.0/6.0)
         #add these to chance of getting both dice on first roll
         lg_straight = ((transitional_arr[2] + prob_one + prob_two + prob_three)*100).truncate(2)
-        puts "Your chance of rolling a small straight is #{sm_straight}%"
-        puts "Your chance of rolling a large straight is #{lg_straight}%"
+        straights = [sm_straight, lg_straight]
     end
 end
 
@@ -96,8 +94,7 @@ def straight_B(roll_count)
     if roll_count == 1
         sm_straight = ((transitional_arr_gap_dice[1])*100).truncate(2)
         lg_straight = ((transitional_arr[2])*100).truncate(2)
-        puts "Your chance of rolling a small straight is #{sm_straight}%"
-        puts "Your chance of rolling a large straight is #{lg_straight}%"
+        straights = [sm_straight, lg_straight]
     elsif roll_count == 2
         prob_a = transitional_arr[0]*transitional_arr_gap_dice[1]
         sm_straight = ((prob_a + transitional_arr_gap_dice[1])*100).truncate(2)
@@ -109,6 +106,7 @@ def straight_B(roll_count)
         prob_three = (20.0/36.0)*(1.0/36.0)
         #add it to chance of both on first roll
         lg_straight = ((prob_one + prob_two + prob_three + transitional_arr[2])*100).truncate(2)
+        straights = [sm_straight, lg_straight]
     end
 end
 
@@ -117,10 +115,8 @@ end
 def straight_C(roll_count)
     if roll_count == 1
         lg_straight = ((2.0/36.0)*100).truncate(2)
-        puts "Your chance of rolling a large straight is #{lg_straight}%"
     elsif roll_count == 2
         lg_straight = (((12.0/36.0)*(1.0/6.0) + (2.0/36.0))*100).truncate(2)
-        puts "Your chance of rolling a large straight is #{lg_straight}%"
     end
 end
 
@@ -131,8 +127,7 @@ def straight_D(roll_count)
     if roll_count == 1
         sm_straight = ((20.0/36.0)*100).truncate(2)
         lg_straight = ((2.0/36.0)*100).truncate(2)
-        puts "Your chance of rolling a small straight is #{sm_straight}%"
-        puts "Your chance of rolling a large straight is #{lg_straight}%"
+        straights = [sm_straight, lg_straight]
     elsif roll_count == 2
         sm_straight = (((16.0/36.0)*(20.0/36.0) + (20.0/36.0))*100).truncate(2)
         #chance of rolling short edge on first roll and long edge on second
@@ -143,8 +138,7 @@ def straight_D(roll_count)
         prob_three = ((16.0/36.0)*(2.0/36.0))
         #add to chance of rolling both on first roll
         lg_straight = ((prob_one + prob_two + prob_three + (2.0/36.0))*100).truncate(2)
-        puts "Your chance of rolling a small straight is #{sm_straight}%"
-        puts "Your chance of rolling a large straight is #{lg_straight}%"
+        straights = [sm_straight, lg_straight]
     end
 end
 
