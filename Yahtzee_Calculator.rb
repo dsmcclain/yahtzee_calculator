@@ -22,6 +22,7 @@ class Game
         @dice = []
         @roll_count
         @multiples = {}
+        @lg_straight
     end
 
     def start_game
@@ -97,7 +98,8 @@ class Game
     def check_full_house(singletons, pairs, triples)
         if triples.any? && pairs.empty?
             chance = (((1.0/6.0) + (5.0/36.0)*(@roll_count-1))*100).truncate(2)
-            puts "If you save your #{singletons.join(' or your ')} your chance of rolling a full house is #{chance}%"
+            puts "If you save your #{triples[0]}s along with your #{singletons.join(' or your ')},"\
+                 " your chance of rolling a full house is #{chance}%"
         elsif pairs.length == 2
             chance = (((1.0/3.0) + (10.0/36.0)*(@roll_count-1))*100).truncate(2)
             puts "If you save your two pairs your chance of rolling a full house is #{chance}%"
@@ -136,33 +138,56 @@ class Game
     end
 
     # Method to identify straight draws and call appropriate methods
-    # from Yahtzee_Probability_Caulculations.rb
+    # from Yahtzee_Probability_Calculations.rb
     def check_straight
         if five_in_a_row?
             puts "You already have a large straight!"
         elsif four_in_a_row?
             puts "You already have a small straight!"
-            if (@multiples.keys & [1,6]).any?=
-                straight_E(@roll_count)
+            if (@multiples.keys & [1,6]).any?
+                puts "If you save (#{@multiples.keys.join(',')}) "\
+                      "your chance of rolling a large straight is #{straight_E(@roll_count)}%"
             else
-                straight_F(@roll_count)
+                puts "If you save (#{@multiples.keys.join(',')}) "\
+                     "your chance of rolling a large straight is #{straight_F(@roll_count)}%"
             end
         elsif three_in_a_row?
             if four_keepers_one_gap?
-                straight_E(@roll_count)
+                puts "If you keep (#{@multiples.keys[0..3].join(',')}) "\
+                     "your chance of rolling a large straight is #{straight_E(@roll_count)}%"
             elsif (@multiples.keys & [1,6]).any?
-                straight_A(@roll_count)
+                if @multiples.keys.include?(3)
+                    print "If you keep (1,2,3) "
+                else
+                    print "If you keep (4,5,6) "
+                end
+                puts "your chance of rolling a small straight is #{straight_A(@roll_count)[0]}% "\
+                     "and your chance of rolling a large straight is #{straight_A(@roll_count)[1]}%"
             else
-                straight_D(@roll_count)
+                puts "If you keep (#{@multiples.keys.join(',')}) "\
+                     "your chance of rolling a small straight is #{straight_D(@roll_count)[0]}% "\
+                     "and your chance of rolling a large straight is #{straight_D(@roll_count)[1]}%"
             end
+        elsif four_keepers_one_gap?
+                puts "If you keep (#{@multiples.keys[0..3].join(',')}) "\
+                     "your chance of rolling a large straight is #{straight_E(@roll_count)}%"
         elsif three_keepers_one_gap?
             if (@multiples.keys & [1,6]).any?
-                straight_A(@roll_count)
+                if @multiples.keys.include?(5)
+                    print "If you keep (3,5,6) "
+                else
+                    print "If you keep (#{@multiples.keys[0..2].join(',')}) "
+                end
+                puts "Your chance of rolling a small straight is #{straight_A(@roll_count)[0]}% "\
+                     "and your chance of rolling a large straight is #{straight_A(@roll_count)[1]}%"
             else
-                straight_B(@roll_count)
+                puts "If you keep (#{@multiples.keys.join(',')}) "\
+                     "your chance of rolling a small straight is #{straight_B(@roll_count)[0]}% "\
+                     "and your chance of rolling a large straight is #{straight_B(@roll_count)[1]}%"
             end
         elsif three_keepers_two_gaps?
-            straight_C(@roll_count)
+            puts "If you keep (#{@multiples.keys[0..2].join(',')}) "\
+                 "your chance of rolling a large straight is #{straight_C(@roll_count)}%"
         end
     end
 
