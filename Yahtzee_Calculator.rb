@@ -42,15 +42,13 @@ class Game
         if input == 'exit'
             puts 'bye!'
             exit
-        end
-
-        @dice = input.to_i.digits.sort
-
-        # Loop to check for valid inputs
-        until @dice.length == 5 && @dice.all? {|x| x.between?(1,6)}
-            puts "Hmmm...that can't be right"
-            puts "What did you really roll?"
-            @dice = gets.to_i.digits.sort
+        else
+            @dice = input.to_i.digits.sort
+            unless @dice.length == 5 && @dice.all? {|x| x.between?(1,6)}
+                puts "Hmmm...that can't be right"
+                puts "What did you really roll?"
+                get_dice
+            end
         end
     end
 
@@ -59,17 +57,15 @@ class Game
         if input == 'exit'
             puts 'bye!'
             exit
-        end
-
-        @roll_count = input.to_i
-
-        # Loop to check for valid inputs
-        until @roll_count.between?(1,2)
-            puts "Well, that's not right.\nIt's either 1 or 2. Which is it?"
-            @roll_count = gets.to_i
+        else
+            @roll_count = input.to_i
+            unless @roll_count.between?(1,2)
+                puts "Well, that's not right.\nIt's either 1 or 2. Which is it?"
+                get_roll
+            end
         end
     end
-    
+
     # Method to create two arrays, one for the numbers the user rolled
     # and one for the amount of times user rolled each number
     # then map these arrays into the hash @multiples.
@@ -80,8 +76,8 @@ class Game
         @multiples = unique_numbers.zip(occurrences).to_h
     end
 
-    #   Method to parse the hash @multiples and then call the methods that check for
-    #   all the possible scenarios.
+    # Method to parse the hash @multiples and then call the methods that check for
+    # all the possible scenarios.
     def parse_dice_and_check
         singletons = @multiples.map { |k,v| v==1 ? k : nil }.compact
         pairs = @multiples.map { |k,v| v==2 ? k : nil }.compact
