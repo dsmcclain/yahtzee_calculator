@@ -9,7 +9,7 @@ notes on future revisions.
 Happy Rolling!
 =end
 
-require_relative 'Yahtzee_Probability_Calculations'
+require_relative 'yahtzee-calculations'
 
 puts %q{Welcome to Yahtzee Calculator
         Enter your roll by just listing the numbers on the dice.
