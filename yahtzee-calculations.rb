@@ -19,52 +19,54 @@
 
 
 def triples_check(roll_count)
-    #transitional array is chance after one roll of being in state with 3, 4, or 5 dice correct
-    transitional_arr = [(25.0/36.0), (10.0/36.0), (1.0/36.0)]
+    transitional_array = [(25.0/36.0), (10.0/36.0), (1.0/36.0)]
+    remain_triples = 25.0/36.0
+    improve_to_quadruples = 10.0/36.0
+    improve_to_yahtzee = 1.0/36.0
     if roll_count == 1
-        quads_chance = (transitional_arr[1]*100).truncate(2)
-        yahtz_chance = (transitional_arr[2]*100).truncate(2)
-        chances = [quads_chance, yahtz_chance]
+        quadruples_probabilty = (improve_to_quadruples*100).truncate(2)
+        yahtzee_probability = (improve_to_yahtzee*100).truncate(2)
+        result = [quadruples_probabilty, yahtzee_probability]
     elsif roll_count == 2
         #calculate chance of getting quadruples on 2nd roll
-        prob_a = transitional_arr[0]*transitional_arr[1]
+        quadruples_on_second_roll = remain_triples*improve_to_quadruples
         #add to chance of getting quadruples on first roll
-        quads_chance = ((transitional_arr[1] + prob_a)*100).truncate(2)
+        quadruples_probabilty = ((improve_to_quadruples + quadruples_on_second_roll)*100).truncate(2)
         #for yahtzee, chance of getting nothing on roll one and both dice on roll two
-        prob_one = transitional_arr[0]*transitional_arr[2]
+        yahtzee_on_second_roll = remain_triples*improve_to_yahtzee
         #chance of getting one dice on roll one and one on roll two
-        prob_two = transitional_arr[1]*(6.0/36.0)
+        yahtzee_in_two_rolls = improve_to_quadruples*(6.0/36.0)
         #add these to chance of getting both dice first roll
-        yahtz_chance = ((prob_one + prob_two + transitional_arr[2])*100).truncate(2)
-        chances = [quads_chance, yahtz_chance]
+        yahtzee_probability = ((yahtzee_on_second_roll + yahtzee_in_two_rolls + improve_to_yahtzee)*100).truncate(2)
+        result = [quadruples_probabilty, yahtzee_probability]
     end
 end
 
 def pairs_check(roll_count)
-    transitional_arr = [(108.0/216.0),(92.0/216.0),(15.0/216.0),(1.0/216.0)]
+    transitional_array = [(108.0/216.0),(92.0/216.0),(15.0/216.0),(1.0/216.0)]
     if roll_count == 1
-        trips_chance = (transitional_arr[1]*100).truncate(2)
-        quads_chance = (transitional_arr[2]*100).truncate(2)
-        yahtz_chance = (transitional_arr[3]*100).truncate(2)
-        chances = [trips_chance, quads_chance, yahtz_chance]
+        trips_chance = (transitional_array[1]*100).truncate(2)
+        quadruples_probabilty = (transitional_array[2]*100).truncate(2)
+        yahtzee_probability = (transitional_array[3]*100).truncate(2)
+        chances = [trips_chance, quadruples_probabilty, yahtzee_probability]
     elsif roll_count == 2
         #add chance of triples on first roll to chance of nothing on first roll and triples on second roll
-        trips_chance = ((transitional_arr[1] + (transitional_arr[0]*transitional_arr[1]))*100).truncate(2)
+        trips_chance = ((transitional_array[1] + (transitional_array[0]*transitional_array[1]))*100).truncate(2)
         #for quadruples, chance of getting nothing on first roll and quadruples on second roll
-        prob_a = (transitional_arr[0]*transitional_arr[2])
+        prob_a = (transitional_array[0]*transitional_array[2])
         #chance of getting triples on first roll and quadruples on second roll
-        prob_b = (transitional_arr[1]*(10.0/36.0))
+        prob_b = (transitional_array[1]*(10.0/36.0))
         #add these to chance of getting quadruples on first roll
-        quads_chance = ((transitional_arr[2] + prob_a + prob_b)*100).truncate(2)
+        quadruples_probabilty = ((transitional_array[2] + prob_a + prob_b)*100).truncate(2)
         #for yahtzee, chance of getting nothing on first roll and yahtzee on second roll
-        prob_one = transitional_arr[0]*transitional_arr[3]
+        prob_one = transitional_array[0]*transitional_array[3]
         #chance of getting triples on first roll and yahtzee on second roll
-        prob_two = transitional_arr[1]*(1.0/36.0)
+        prob_two = transitional_array[1]*(1.0/36.0)
         #chance of getting quadruples on first roll and yahtzee on second roll
-        prob_three = transitional_arr[2]*(1.0/6.0)
+        prob_three = transitional_array[2]*(1.0/6.0)
         #add these to chance of getting yahtzee on first roll
-        yahtz_chance = ((transitional_arr[3] + prob_one + prob_two + prob_three)*100).truncate(2)
-        chances = [trips_chance, quads_chance, yahtz_chance]
+        yahtzee_probability = ((transitional_array[3] + prob_one + prob_two + prob_three)*100).truncate(2)
+        chances = [trips_chance, quadruples_probabilty, yahtzee_probability]
     end
 end
 
@@ -74,29 +76,29 @@ end
 #Instances(4): (1,2,4) / (1,3,4) / (3,4,6) / (3,5,6) || (1,2,3) / (4,5,6)
 def straight_A(roll_count)
     #Transitional Array (chance after one roll of having 3, 4, or 5 dice correct)
-    transitional_arr = [(20.0/36.0), (14.0/36.0), (2.0/36.0)]
-    transitional_arr_gap_dice = [(25.0/36.0), (9.0/36.0)]
+    transitional_array = [(20.0/36.0), (14.0/36.0), (2.0/36.0)]
+    transitional_array_gap_dice = [(25.0/36.0), (9.0/36.0)]
 
     if roll_count == 1
         #Chance with one roll remaining is identical to the transitional array.
         #Small straight uses separate array because only the gap dice qualifies, not the edge.
-        sm_straight = ((transitional_arr_gap_dice[1])*100).truncate(2)
-        lg_straight = ((transitional_arr[2])*100).truncate(2)
+        sm_straight = ((transitional_array_gap_dice[1])*100).truncate(2)
+        lg_straight = ((transitional_array[2])*100).truncate(2)
         straights = [sm_straight, lg_straight]
     elsif roll_count == 2
         #SMALL STRAIGHT: add probablity of acheiving small straight on first roll (prob_a)
         #to probablity of acheiving it on the second roll.
-        prob_a = transitional_arr[0]*transitional_arr_gap_dice[1]
-        sm_straight = ((prob_a + transitional_arr_gap_dice[1])*100).truncate(2)
+        prob_a = transitional_array[0]*transitional_array_gap_dice[1]
+        sm_straight = ((prob_a + transitional_array_gap_dice[1])*100).truncate(2)
         #LARGE STRAIGHT
         #prob_one is the chance of getting nothing on first roll and both dice on second roll
-        prob_one = transitional_arr[0]*transitional_arr[2]
+        prob_one = transitional_array[0]*transitional_array[2]
         #prob_two is the chance of getting edge dice on first roll and gap on second roll
         prob_two = (9.0/36.0)*(1.0/6.0)
         #prob_three is the chance of getting gap dice on first roll and either edge on second roll
-        prob_three = transitional_arr_gap_dice[1]*(2.0/6.0)
+        prob_three = transitional_array_gap_dice[1]*(2.0/6.0)
         #add these to chance of getting both dice on first roll
-        lg_straight = ((transitional_arr[2] + prob_one + prob_two + prob_three)*100).truncate(2)
+        lg_straight = ((transitional_array[2] + prob_one + prob_two + prob_three)*100).truncate(2)
         straights = [sm_straight, lg_straight]
     end
 end
@@ -104,28 +106,28 @@ end
 #Scenario: three unique dice, one gap, two edges
 #Instances(2): (2,3,5) / (2,4,5)
 def straight_B(roll_count)
-    transitional_arr = [(16.0/36.0), (16.0/36.0), (4.0/36.0)]
-    transitional_arr_gap_dice = [(25.0/36.0), (9.0/36.0)]
+    transitional_array = [(16.0/36.0), (16.0/36.0), (4.0/36.0)]
+    transitional_array_gap_dice = [(25.0/36.0), (9.0/36.0)]
 
     if roll_count == 1
         #Chance with one roll remaining is identical to the transitional array.
         #Small straight uses separate array because only the gap dice qualifies, not the edge.
-        sm_straight = ((transitional_arr_gap_dice[1])*100).truncate(2)
-        lg_straight = ((transitional_arr[2])*100).truncate(2)
+        sm_straight = ((transitional_array_gap_dice[1])*100).truncate(2)
+        lg_straight = ((transitional_array[2])*100).truncate(2)
         straights = [sm_straight, lg_straight]
     elsif roll_count == 2
         #SMALL STRAIGHT
-        prob_a = transitional_arr[0]*transitional_arr_gap_dice[1]
-        sm_straight = ((prob_a + transitional_arr_gap_dice[1])*100).truncate(2)
+        prob_a = transitional_array[0]*transitional_array_gap_dice[1]
+        sm_straight = ((prob_a + transitional_array_gap_dice[1])*100).truncate(2)
         #LARGE STRAIGHT
         #prob_one is chance of rolling nothing on first roll and both dice on second roll
-        prob_one = transitional_arr[0]*transitional_arr[2]
+        prob_one = transitional_array[0]*transitional_array[2]
         #prob_two is chance of gap dice on first roll and either edge on second roll
-        prob_two = transitional_arr_gap_dice[1]*(2.0/6.0)
+        prob_two = transitional_array_gap_dice[1]*(2.0/6.0)
         #prob_three is chance of either edge on first roll and gap on second roll
         prob_three = (20.0/36.0)*(1.0/36.0)
         #add these to the chance of getting both gap and edge on first roll
-        lg_straight = ((prob_one + prob_two + prob_three + transitional_arr[2])*100).truncate(2)
+        lg_straight = ((prob_one + prob_two + prob_three + transitional_array[2])*100).truncate(2)
         straights = [sm_straight, lg_straight]
     end
 end

@@ -116,7 +116,7 @@ class Game
         if triples.any?
             puts "You already have three of a kind!"
             puts "Your chance of rolling four of a kind with #{triples[0]}s is #{triples_check(@roll_count)[0]}% "\
-                 "and your chance of rolling YAHTZEE is #{triples_check(@roll_count)[1]}"
+                 "and your chance of rolling YAHTZEE is #{triples_check(@roll_count)[1]}%"
         end
 
         if quadruples.any?
