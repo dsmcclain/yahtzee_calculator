@@ -17,12 +17,12 @@ puts %q{Welcome to Yahtzee Calculator
         Happy rolling!}
 
 class Game
-    attr_reader :dice, :roll_count, :multiples
+    attr_accessor :dice, :roll_count, :multiples
 
-    def initialize
-        @dice
-        @roll_count
-        @multiples
+    def initialize(dice, roll_count, multiples)
+        @dice = dice
+        @roll_count = roll_count
+        @multiples = multiples
     end
 
     def start_game
@@ -217,7 +217,7 @@ class Game
     
 end
 
-# new_game = Game.new
+# new_game = Game.new([], 0, {})
 
 # loop do
 #     new_game.start_game
