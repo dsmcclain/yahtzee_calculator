@@ -19,54 +19,43 @@
 
 
 def triples_check(roll_count)
-    transitional_array = [(25.0/36.0), (10.0/36.0), (1.0/36.0)]
     remain_triples = 25.0/36.0
     improve_to_quadruples = 10.0/36.0
     improve_to_yahtzee = 1.0/36.0
     if roll_count == 1
-        quadruples_probabilty = (improve_to_quadruples*100).truncate(2)
-        yahtzee_probability = (improve_to_yahtzee*100).truncate(2)
-        result = [quadruples_probabilty, yahtzee_probability]
+        quadruples_probabilty = (improve_to_quadruples * 100).truncate(2)
+        yahtzee_probability = (improve_to_yahtzee * 100).truncate(2)
+        return [quadruples_probabilty, yahtzee_probability]
     elsif roll_count == 2
-        #calculate chance of getting quadruples on 2nd roll
-        quadruples_on_second_roll = remain_triples*improve_to_quadruples
-        #add to chance of getting quadruples on first roll
-        quadruples_probabilty = ((improve_to_quadruples + quadruples_on_second_roll)*100).truncate(2)
-        #for yahtzee, chance of getting nothing on roll one and both dice on roll two
-        yahtzee_on_second_roll = remain_triples*improve_to_yahtzee
-        #chance of getting one dice on roll one and one on roll two
-        yahtzee_in_two_rolls = improve_to_quadruples*(6.0/36.0)
-        #add these to chance of getting both dice first roll
-        yahtzee_probability = ((yahtzee_on_second_roll + yahtzee_in_two_rolls + improve_to_yahtzee)*100).truncate(2)
-        result = [quadruples_probabilty, yahtzee_probability]
+        quadruples_on_second_roll = remain_triples * improve_to_quadruples
+        quadruples_probabilty = ((improve_to_quadruples + quadruples_on_second_roll) * 100).truncate(2)
+        yahtzee_on_second_roll = remain_triples * improve_to_yahtzee
+        yahtzee_in_two_rolls = improve_to_quadruples * (6.0/36.0)
+        yahtzee_probability = ((yahtzee_on_second_roll + yahtzee_in_two_rolls + improve_to_yahtzee) * 100).truncate(2)
+        return [quadruples_probabilty, yahtzee_probability]
     end
 end
 
 def pairs_check(roll_count)
-    transitional_array = [(108.0/216.0),(92.0/216.0),(15.0/216.0),(1.0/216.0)]
+    remain_pair = 108.0/216.0
+    improve_to_triples = 92.0/216.0
+    improve_to_quadruples = 15.0/216.0
+    improve_to_yahtzee = 1.0/216.0
     if roll_count == 1
-        trips_chance = (transitional_array[1]*100).truncate(2)
-        quadruples_probabilty = (transitional_array[2]*100).truncate(2)
-        yahtzee_probability = (transitional_array[3]*100).truncate(2)
-        chances = [trips_chance, quadruples_probabilty, yahtzee_probability]
+        triples_probability = (improve_to_triples * 100).truncate(2)
+        quadruples_probabilty = (improve_to_quadruples * 100).truncate(2)
+        yahtzee_probability = (improve_to_yahtzee * 100).truncate(2)
+        return [triples_probability, quadruples_probabilty, yahtzee_probability]
     elsif roll_count == 2
-        #add chance of triples on first roll to chance of nothing on first roll and triples on second roll
-        trips_chance = ((transitional_array[1] + (transitional_array[0]*transitional_array[1]))*100).truncate(2)
-        #for quadruples, chance of getting nothing on first roll and quadruples on second roll
-        prob_a = (transitional_array[0]*transitional_array[2])
-        #chance of getting triples on first roll and quadruples on second roll
-        prob_b = (transitional_array[1]*(10.0/36.0))
-        #add these to chance of getting quadruples on first roll
-        quadruples_probabilty = ((transitional_array[2] + prob_a + prob_b)*100).truncate(2)
-        #for yahtzee, chance of getting nothing on first roll and yahtzee on second roll
-        prob_one = transitional_array[0]*transitional_array[3]
-        #chance of getting triples on first roll and yahtzee on second roll
-        prob_two = transitional_array[1]*(1.0/36.0)
-        #chance of getting quadruples on first roll and yahtzee on second roll
-        prob_three = transitional_array[2]*(1.0/6.0)
-        #add these to chance of getting yahtzee on first roll
-        yahtzee_probability = ((transitional_array[3] + prob_one + prob_two + prob_three)*100).truncate(2)
-        chances = [trips_chance, quadruples_probabilty, yahtzee_probability]
+        triples_probability = ((improve_to_triples + (remain_pair * improve_to_triples)) * 100).truncate(2)
+        quadruples_on_second_roll = (remain_pair * improve_to_quadruples)
+        quadruples_in_two_rolls = (improve_to_triples * (10.0/36.0))
+        quadruples_probabilty = ((improve_to_quadruples + quadruples_on_second_roll + quadruples_in_two_rolls) * 100).truncate(2)
+        yahtzee_on_second_roll = remain_pair * improve_to_yahtzee
+        triples_then_yahtzee = improve_to_triples*(1.0/36.0)
+        quadruples_then_yahtzee = improve_to_quadruples * (1.0/6.0)
+        yahtzee_probability = ((improve_to_yahtzee + yahtzee_on_second_roll + triples_then_yahtzee + quadruples_then_yahtzee) * 100).truncate(2)
+        return [triples_probability, quadruples_probabilty, yahtzee_probability]
     end
 end
 
@@ -186,13 +175,3 @@ def straight_F(roll_count)
         lg_straight = (((4.0/6.0)*(2.0/6.0) + (2.0/6.0))*100).truncate(2)
     end
 end
-
-#FUTURE SCENARIOS TO BE CALCULATED:
-#Scenario: two consecutive numbers, central
-#Instances(1): (3,4)
-
-#Scenario: two consecutive numbers, open-ended
-#Instances(2): (2,3) / (4,5)
-
-#Scenario: two consecutive numbers, close-ended
-#Instances(2): (1,2) / (5,6)
