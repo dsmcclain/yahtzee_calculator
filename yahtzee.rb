@@ -43,13 +43,17 @@ class Game
             puts 'bye!'
             exit
         else
-            @dice = input.to_i.digits.sort
-            unless @dice.length == 5 && @dice.all? {|x| x.between?(1,6)}
+            unless input.length == 5 && input.to_i.digits.all? {|x| x.between?(1,6)}
                 puts "Hmmm...that can't be right"
                 puts "What did you really roll?"
                 get_dice
             end
         end
+        sort_dice(input)
+    end
+
+    def sort_dice(input)
+        @dice = input.to_i.digits.sort
     end
 
     def get_roll
@@ -217,8 +221,8 @@ class Game
     
 end
 
-# new_game = Game.new([], 0, {})
+new_game = Game.new([], 0, {})
 
-# loop do
-#     new_game.start_game
-# end
+loop do
+    new_game.start_game
+end
