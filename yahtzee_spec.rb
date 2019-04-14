@@ -1,3 +1,6 @@
+#command to run tests (from project directory): rspec yahtzee_spec.rb
+#before tests are run you must comment out the final lines of yahtzee.rb
+#where a Game instance is created and the start_game loop is invoked
 require_relative 'yahtzee.rb'
 
 describe Game do
