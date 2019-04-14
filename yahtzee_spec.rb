@@ -1,7 +1,7 @@
 require_relative 'yahtzee.rb'
 
 describe Game do
-  before :each do
+  before(:context) do
     @game = Game.new([1,2,3,4,5], 1, {})
   end
 
@@ -15,9 +15,9 @@ describe Game do
     @game.sort_dice(54321)
     expect(@game.dice).to eq([1,2,3,4,5])
     @game.sort_dice(13321)
-    expect(@game.dice).to eq ([1,1,2,3,3])
+    expect(@game.dice).to eq([1,1,2,3,3])
     @game.sort_dice(12345)
-    expect(@game.dice).to eq ([1,2,3,4,5])
+    expect(@game.dice).to eq([1,2,3,4,5])
   end
 
   it 'should organize dice into a hash' do
