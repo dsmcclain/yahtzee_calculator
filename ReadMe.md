@@ -13,8 +13,8 @@ of different outcomes, such as 'four of a kind', 'large straight', or
 
 A breakdown of the rules can be found [here](https://www.wikihow.com/Play-Yahtzee).
 
-The Yahtzee Calculator consists of two three files: this readme, a file containing
-the app itself (yahtzee.rb), and a dependency containing all of the probability
+The Yahtzee Calculator consists of four files: this readme, a file containing
+the app itself (yahtzee.rb), a file containing some basic Rspec tests (yahtzee_spec.rb), and a dependency containing all of the probability
 calculations (yahtzee-calculations.rb).
 
 The app is written in ruby 2.5.1  If you have ruby installed locally, you
